@@ -1,0 +1,11 @@
+langauge: ruby
+rbenv:
+- 2.5.3
+addons:
+  postgresql: 9.6
+script:
+- bundle exec rails db:{create,migrate} RAILS_ENV=test
+- bundle exec rspec
+deploy:
+  api_key:
+    secure: VR3kXwfQWy1o4AWiyAMO1i5pPb7YPbZHB3E5bADXIRiIBIkgAaE6prPFA1TGKgwAsxMp46EXcpr0usp40yqKm76mt/QyOnHGcKFaqdw/0Hz2ZFfF2QSfyvDWNVHUXNuhEFwSQNuOEPdkmILkz6gQy/IRO96LSdTwSVAhYYD6xUy772mG2jTicAqvkqfvN3Ezypdz+9mr+dwXTic0HDgAnHx5psYo0H6i6tTC71DnAl9V3hVpORQYEjHkcnSQtzEBhZNG1yfjVmBVpcBMESrbSgMh/L0qGleFO2MK0B9amx0WaQVQjGjBADAQjLP7VKVChtcBcYL+pBPz4urB9+OzetzACjCM2nMRwmRr60+nze50WwStdnRJas+Fk3H72TFgdT7Vz5u8vV8IlCqubOUUVLdgzwpguz7boPv/tb0dL265Gqf61b2RPZ2Ekp019taW+fIBzciQUAPFDDx0NAUCQU2N78P1987yNxmnvesf5FcfYFfUryNwJw9US9Vif0WXb3Wx5+w/eMOgNH4QPYOInJIO59FXLKu2X0rDYhYk0FBVJ65Huassd2pNp7n0Tu2Cex5gvx56Y6xMN+Zyn5NAm0AFvQFoEFdegChgR/D8M6yO12kqCy2BiXRXJuOb9NMghi2uHf6itz8cfSqxCGCFPxcnxXNV7WODf/cgmibofKg=
