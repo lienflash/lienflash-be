@@ -29,7 +29,7 @@ group :development, :test do
   gem 'activerecord-reset-pk-sequence'
   gem 'simplecov'
 end
-
+# This is a test comment for testing Travis-ci deployment to Heroku
 group :development do
   gem 'listen', '~> 3.2'
 end
