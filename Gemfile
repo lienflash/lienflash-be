@@ -15,6 +15,7 @@ gem 'faraday'
 gem 'travis'
 gem 'rack-cors'
 gem 'sendgrid-ruby'
+gem 'twilio-ruby'
 
 
 group :development, :test do
