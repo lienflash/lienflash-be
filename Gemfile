@@ -13,6 +13,7 @@ gem 'city-state'
 gem 'figaro'
 gem 'faraday'
 gem 'travis'
+gem 'sendgrid-ruby'
 
 
 group :development, :test do
