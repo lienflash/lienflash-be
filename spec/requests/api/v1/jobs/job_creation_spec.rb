@@ -54,7 +54,6 @@ describe "API V1 Jobs", type: 'request' do
           data = JSON.parse(response.body)
 
           expect(response.status).to eq(400)
-          require"pry"; binding.pry
           expect(data["data"]["errors"][0]).to eq("Job street can't be blank")
         end
       end
