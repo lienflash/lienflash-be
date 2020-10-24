@@ -4,9 +4,14 @@ require 'twilio-ruby'
 include SendGrid
 
 class Api::V1::JobsController < ApplicationController
+
+  def index
+    render json: JobSerializer.new(Job.all) 
+  end
+
   def create
     job = Job.new(job_params)
-    
+
     if job.save
       render json: JobSerializer.new(job), status: 201
 
