@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       post '/jobs', to: 'jobs#create'
       get '/jobs', to: 'jobs#index'
       get '/jobs/:id', to: 'jobs#show'
+      patch '/jobs/:id', to: 'jobs#update'
     end
   end
 end
