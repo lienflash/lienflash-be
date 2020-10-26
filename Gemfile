@@ -16,6 +16,7 @@ gem 'travis'
 gem 'rack-cors'
 gem 'sendgrid-ruby'
 gem 'twilio-ruby'
+gem 'sidekiq'
 
 
 group :development, :test do
