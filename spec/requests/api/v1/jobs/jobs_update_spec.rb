@@ -31,7 +31,6 @@ Rails.describe "API V1 Jovs", type: 'request' do
       )
     end
     it "can update the status of a job" do
-      binding.pry
       patch "/api/v1/jobs/#{@job1.id}" 
       
       expect(response).to be_successful
@@ -39,7 +38,7 @@ Rails.describe "API V1 Jovs", type: 'request' do
 
       json = JSON.parse(response.body, symbolize_names: true)
   
-      expect(json[:data][:attributes][:status]).to eq("late")
+      expect(json[:data][:attributes][:status]).to eq("NOI Eligible")
     end
   end
 end
