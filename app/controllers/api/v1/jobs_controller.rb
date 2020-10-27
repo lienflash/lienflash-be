@@ -5,7 +5,7 @@ include SendGrid
 class Api::V1::JobsController < ApplicationController
 
   def index
-    render json: JobSerializer.new(Job.all) 
+    render json: JobSerializer.new(Job.all)
   end
 
   def show
@@ -14,25 +14,10 @@ class Api::V1::JobsController < ApplicationController
 
   def create
     job = Job.new(job_params)
-
     if job.save
       render json: JobSerializer.new(job), status: 201
-
-      WelcomeWorker.new.welcome_email(job)
-
-# account_sid = ENV['TWILIO_SID']
-# auth_token = ENV['TWILIO_AUTH_TOKEN']
-# client = Twilio::REST::Client.new(account_sid, auth_token)
-
-# from = '+14159413974' # Your Twilio number
-# to = '+13037179808' # Your mobile phone number
-
-# client.messages.create(
-# from: from,
-# to: to,
-# body: "Hey friend!"
-# )
-
+      id = job.id
+      JobCreationWorker.perform_in(2.minutes.from_now, id, 2)
     else
       render json: {"data":{"errors": job.errors.full_messages}}, status: 400
     end
