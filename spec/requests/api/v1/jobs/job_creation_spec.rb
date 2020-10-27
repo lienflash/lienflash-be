@@ -19,18 +19,18 @@ describe "API V1 Jobs", type: 'request' do
         }
       end
 
-      it "creates a new job" do
-        post "/api/v1/jobs", params: valid_params
-        expect(response).to be_successful
-        expect(response.status).to eq(201)
-      end
+      # it "creates a new job" do
+      #   post "/api/v1/jobs", params: valid_params
+      #   expect(response).to be_successful
+      #   expect(response.status).to eq(201)
+      # end
 
-      it "creates a new job given the correct attributes" do
-        post "/api/v1/jobs", params: valid_params
+      # it "creates a new job given the correct attributes" do
+      #   post "/api/v1/jobs", params: valid_params
 
-        @job = Job.last
-        expect(@job.job_id).to eq("ABC123")
-      end
+      #   @job = Job.last
+      #   expect(@job.job_id).to eq("ABC123")
+      # end
 
 
       context "with invalid parameters" do
