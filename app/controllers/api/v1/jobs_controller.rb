@@ -16,8 +16,8 @@ class Api::V1::JobsController < ApplicationController
     job = Job.new(job_params)
     if job.save
       render json: JobSerializer.new(job), status: 201
-      id = job.id
-      JobCreationWorker.perform_at(2.minutes.from_now, id, 2)
+      #id = job.id
+      #JobCreationWorker.perform_at(2.minutes.from_now, id, 2)
     else
       render json: {"data":{"errors": job.errors.full_messages}}, status: 400
     end
