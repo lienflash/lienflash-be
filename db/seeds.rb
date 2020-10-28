@@ -6,28 +6,30 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 job1 = Job.create(
-        job_street: "123 Main St.",
-        job_city: "Denver",
-        job_state: "Co",
-        job_zip: "80218",
-        date_of_completion: "2020-01-01T04:05:06+00:00",
-        company_name: "Construction Co Inc LLC",
-        contact_name: "Timmy Tim Tim",
-        material_cost: 1000.00,
+        job_type: "Labor",
+        job_site_contact_name: "Tim",
+        job_site_name: "Job Site",
+        job_site_address: "123 Main St.",
+        job_site_city: "Denver",
+        job_site_state: "CO",
+        job_site_zip_code: "80218",
+        completion_date: "2020-10-20T04:05:06+00:00",
+        description_of_work: "We fixed a toilet",
         labor_cost: 100.00,
-        job_description: "We fixed some stuff.",
-        job_id: "ABC123"
+        material_cost: 150.00,
+        total_cost: 250.00
       )
 job2 = Job.create(
-        job_street: "2nd Location St.",
-        job_city: "Boulder",
-        job_state: "Co",
-        job_zip: "80309",
-        date_of_completion: "2020-10-20T04:05:06+00:00",
-        company_name: "Construction Co Inc LLC",
-        contact_name: "Josh T",
-        material_cost: 1000.00,
-        labor_cost: 100.00,
-        job_description: "We fixed some different stuff.",
-        job_id: "ABC124"
+        job_type: "Labor",
+        job_site_contact_name: "Tim",
+        job_site_name: "Job Site",
+        job_site_address: "1234 Street St.",
+        job_site_city: "Denver",
+        job_site_state: "CO",
+        job_site_zip_code: "80218",
+        completion_date: "2020-10-20T04:05:06+00:00",
+        description_of_work: "We fixed a shower",
+        labor_cost: 200.00,
+        material_cost: 150.00,
+        total_cost: 350.00
       )
