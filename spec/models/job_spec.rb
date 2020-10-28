@@ -12,8 +12,8 @@ RSpec.describe Job, type: :model do
     it { should validate_presence_of :job_site_zip_code }
     it { should validate_presence_of :completion_date }
     it { should validate_presence_of :description_of_work }
-    it { should validate_presence_of :labor_cost }
-    it { should validate_presence_of :material_cost }
+    #it { should validate_presence_of :labor_cost }
+    #it { should validate_presence_of :material_cost }
     it { should validate_presence_of :total_cost }
   end
 
