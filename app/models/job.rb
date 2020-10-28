@@ -13,15 +13,18 @@ class Job < ApplicationRecord
     date_time = DateTime.parse("#{self.date_of_completion}")
     (today - date_time).to_i
   end
+  
+  def second_notice
+  end
 
   def late?
-    days_outstanding > 30
+    days_outstanding == 45
   end
 
   def status_update
     if self.late? 
       self.status = 1
-    end 
+    end
   end 
   # validates :company_name
   # validates :contact_name
