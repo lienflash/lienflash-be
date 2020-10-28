@@ -33,11 +33,11 @@ class Job < ApplicationRecord
   end
 
   def late?
-    days_outstanding == 45
+    days_outstanding >= 45
   end
 
   def status_update
-    if self.late?
+    if self.late? && self.status == 0
       self.status = 1
     end
   end
