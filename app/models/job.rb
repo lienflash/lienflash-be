@@ -11,8 +11,8 @@ class Job < ApplicationRecord
   validates :job_site_zip_code, presence: true
   validates :completion_date, presence: true
   validates :description_of_work, presence: true
-  validates :labor_cost, presence: true
-  validates :material_cost, presence: true
+  #validates :labor_cost
+  #validates :material_cost
   validates :total_cost, presence: true
   # validates :client_company_name
   # validates :business_address
