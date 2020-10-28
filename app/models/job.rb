@@ -3,7 +3,7 @@ class Job < ApplicationRecord
 
   validates :job_type, presence: true
   validates :job_site_contact_name, presence: true
-  validates :job_site_name, presence: true
+  # validates :job_site_name
   validates :job_site_address, presence: true
   # validates :job_site_address_line_2
   validates :job_site_city, presence: true
