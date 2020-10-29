@@ -2,16 +2,22 @@ require 'sendgrid-ruby'
 include SendGrid
 include ActionView::Helpers::NumberHelper
 
-class JobCreationEmail
+class FirstNoticeEmail
   def send(job)
     from = Email.new(email: 'josh.tukman@gmail.com')
     to = Email.new(email: 'nickedwin85@gmail.com')
-    subject = "You've added a new job to Lien Flash"
+    subject = "A job on Lien Flash requires your attention"
     content = Content.new(type: 'text/plain', value:
-      "A new job located at: #{job.job_site_address} #{job.job_site_city}, #{job.job_site_state} #{job.job_site_zip_code} has been created using Lien Flash.
+      "The job located at: #{job.job_site_address} #{job.job_site_city}, #{job.job_site_state} #{job.job_site_zip_code} has been unpaid for 45 days.
 This job has an unpaid balance of #{number_to_currency(job.total_cost)}.
 
-In 45 days you will be given the option to create a Letter of Intent to File a Lien if payment has not been received.
+Would you like us to proceed with filing a Notice of Intent to file a lien?
+If so please click here: **link to send to jason with account info and job info for him to reach out, and thank you page on the**
+
+If not you will be reminded again in 30 days.
+*Please note, there are 60 days remaining to file this NOI. If that time elapses you will lose the right to file a lien.
+
+If you have received payment on this job already, please click here to stop these notifications and close this job on Lien Flash.
 
 Thank you for using Lien Flash!
 
