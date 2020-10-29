@@ -34,7 +34,7 @@ class Job < ApplicationRecord
 
   def days_outstanding
     today = Date.today
-    date_time = DateTime.parse("#{self.completion_date}")
+    date_time = Date.parse("#{self.completion_date}")
     (today - date_time).to_i
   end
 
