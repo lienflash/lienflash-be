@@ -12,8 +12,7 @@ class CustomerText
     client.messages.create(
     from: from,
     to: to,
-    body: "A new job has been created using Lien Flash."
-    )
+    body: "A new job has been created using Lien Flash.")
   end
 
   def job_text_notification
