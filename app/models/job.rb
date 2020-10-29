@@ -1,5 +1,6 @@
 require 'date'
 class Job < ApplicationRecord
+  before_validation :default_date, :default_status
 
   validates :job_type, presence: true
   validates :job_site_contact_name, presence: true
@@ -23,10 +24,19 @@ class Job < ApplicationRecord
   # validates :additional_info
   enum status: { "good standing": 0, "NOI Eligible": 1, "NOI filed": 2, "Lien Filed": 3, "inactive": 4}
 
+  def default_date
+    self.completion_date ||= DateTime.now
+  end
+
+  def default_status
+    self.status ||= 0
+  end
+
   def days_outstanding
     today = Date.today
-    date_time = DateTime.parse("#{self.date_of_completion}")
-    (today - date_time).to_i
+    # date_time = DateTime.parse("#{self.completion_date}")
+    # (today - date_time).to_i
+    (today - self.completion_date.to_date).to_i
   end
 
   def second_notice
@@ -37,8 +47,8 @@ class Job < ApplicationRecord
   end
 
   def status_update
-    if self.late? && self.status == 0
-      self.status = 1
+    if self.late? && self.status == "good standing"
+      self.status = "NOI Eligible"
     end
   end
 end
