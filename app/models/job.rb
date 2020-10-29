@@ -69,33 +69,34 @@ class Job < ApplicationRecord
     if self.job_type == "Materials & Labor"
       days_outstanding > 110
     else
-      days_outstanding > 50 
+      days_outstanding > 50
     end
   end
 
   def status_update
     job = Job.find(self.id)
-    if job.late? && job.status == "good standing" 
+    if job.late? && job.status == "good standing"
       job.status = "NOI Eligible"
       job.save
-      #FirstNoticeEmail.new.send(self) if self.job_type == "Materials & Labor"
-      #JustLaborFirstNoticeEmail.new.send(self) if self.job_type == "Labor"
-      #CustomerText.new.job_text_notification
-    elsif self.second_notice && self.status != 2 && self.status != 3 && self.status != 4
-      SecondNoticeEmail.new.send(self) if self.job_type == "Materials & Labor"
-      JustLaborSecondNoticeEmail.new.send(self) if self.job_type == "Labor"
-      CustomerText.new.job_text_notification
-    elsif self.third_notice && self.status != 2 && self.status != 3 && self.status != 4
-      ThirdNoticeEmail.new.send(self)
-      CustomerText.new.job_text_notification
-    elsif self.fourth_notice && self.status != 2 && self.status != 3 && self.status != 4
-      FourthNoticeEmail.new.send(self)
-      CustomerText.new.job_text_notification
-    elsif self.final_notice && self.status != 2 && self.status != 3 && self.status != 4
-      FinalNoticeEmail.new.send(self)
-      CustomerText.new.final_text_notification
-    elsif self.expire && self.status != 2 && self.status != 3
-      self.status = 4
+      # FirstNoticeEmail.new.send(job) if job.job_type == "Materials & Labor"
+      # JustLaborFirstNoticeEmail.new.send(job) if job.job_type == "Labor"
+      # CustomerText.new.job_text_notification
+    elsif job.second_notice && job.status != 2 && job.status != 3 && job.status != 4
+      # SecondNoticeEmail.new.send(job) if job.job_type == "Materials & Labor"
+      # JustLaborSecondNoticeEmail.new.send(job) if job.job_type == "Labor"
+      # CustomerText.new.job_text_notification
+    elsif job.third_notice && job.status != 2 && job.status != 3 && job.status != 4
+      # ThirdNoticeEmail.new.send(job)
+      # CustomerText.new.job_text_notification
+    elsif job.fourth_notice && job.status != 2 && job.status != 3 && job.status != 4
+      # FourthNoticeEmail.new.send(job)
+      # CustomerText.new.job_text_notification
+    elsif job.final_notice && job.status != 2 && job.status != 3 && job.status != 4
+      # FinalNoticeEmail.new.send(job)
+      # CustomerText.new.final_text_notification
+    elsif job.expire && job.status != 2 && job.status != 3
+      job.status = 4
+      job.save
     end
   end
 end
