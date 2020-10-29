@@ -47,8 +47,11 @@ class Job < ApplicationRecord
   end
 
   def status_update
-    if self.late? && self.status == "good standing"
-      self.status = "NOI Eligible"
+    job = Job.find(self.id)
+    if job.late? && job.status == "good standing"
+      job.status = "NOI Eligible"
+      job.save
+      # self.save
     end
   end
 end

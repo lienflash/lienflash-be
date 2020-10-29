@@ -11,7 +11,7 @@ FactoryBot.define do
     description_of_work { Faker::Lorem.sentence }
     sequence(:labor_cost) { |n| n }
     sequence(:material_cost) { |n| ("#{n}".to_i)*2 }
-    total_cost { |n| ("#{n}".to_i)*3 }
+    sequence(:total_cost) { |n| ("#{n}".to_i)*3 }
     status { 0 }
   end
 end
