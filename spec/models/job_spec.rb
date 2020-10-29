@@ -61,6 +61,7 @@ RSpec.describe Job, type: :model do
       travel(1.day)
       job1.status_update
       job2.status_update
+      job1 = Job.first
       expect(job1.status).to eq("NOI Eligible")
       expect(job2.status).to eq("NOI filed")
     end

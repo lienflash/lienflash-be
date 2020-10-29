@@ -12,8 +12,8 @@ class Api::V1::JobsController < ApplicationController
     job = Job.new(job_params)
     if job.save
       render json: JobSerializer.new(job), status: 201
-      JobCreationEmail.new.send(job)
-      CustomerText.new.job_creation
+      # JobCreationEmail.new.send(job)
+      # CustomerText.new.job_creation
     else
       render json: {"data":{"errors": job.errors.full_messages}}, status: 400
     end
