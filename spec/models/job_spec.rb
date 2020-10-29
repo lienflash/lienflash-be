@@ -5,15 +5,15 @@ RSpec.describe Job, type: :model do
   describe 'validations' do
     it { should validate_presence_of :job_type }
     it { should validate_presence_of :job_site_contact_name }
-    it { should validate_presence_of :job_site_name }
+    # it { should validate_presence_of :job_site_name }
     it { should validate_presence_of :job_site_address }
     it { should validate_presence_of :job_site_city }
     it { should validate_presence_of :job_site_state }
     it { should validate_presence_of :job_site_zip_code }
     # it { should validate_presence_of :completion_date }
     it { should validate_presence_of :description_of_work }
-    it { should validate_presence_of :labor_cost }
-    it { should validate_presence_of :material_cost }
+    #it { should validate_presence_of :labor_cost }
+    #it { should validate_presence_of :material_cost }
     it { should validate_presence_of :total_cost }
   end
 

@@ -4,7 +4,7 @@ class Job < ApplicationRecord
 
   validates :job_type, presence: true
   validates :job_site_contact_name, presence: true
-  validates :job_site_name, presence: true
+  # validates :job_site_name
   validates :job_site_address, presence: true
   # validates :job_site_address_line_2
   validates :job_site_city, presence: true
@@ -12,8 +12,8 @@ class Job < ApplicationRecord
   validates :job_site_zip_code, presence: true
   validates :completion_date, presence: true
   validates :description_of_work, presence: true
-  validates :labor_cost, presence: true
-  validates :material_cost, presence: true
+  #validates :labor_cost
+  #validates :material_cost
   validates :total_cost, presence: true
   # validates :client_company_name
   # validates :business_address
@@ -34,16 +34,52 @@ class Job < ApplicationRecord
 
   def days_outstanding
     today = Date.today
-    # date_time = DateTime.parse("#{self.completion_date}")
-    # (today - date_time).to_i
-    (today - self.completion_date.to_date).to_i
-  end
-
-  def second_notice
+    date_time = DateTime.parse("#{self.completion_date}")
+    (today - date_time).to_i
   end
 
   def late?
-    days_outstanding >= 45
+    if self.job_type == "Materials & Labor"
+      days_outstanding >= 45
+    else
+      days_outstanding >= 30
+    end
+  end
+
+  def second_notice
+    if self.job_type == "Materials & Labor"
+      days_outstanding == 75
+    else
+      days_outstanding == 45
+    end
+  end
+
+  def third_notice
+    if self.job_type == "Materials & Labor"
+      days_outstanding == 90
+    end
+  end
+
+  def fourth_notice
+    if self.job_type == "Materials & Labor"
+      days_outstanding == 100
+    end
+  end
+
+  def final_notice
+    if self.job_type == "Materials & Labor"
+      days_outstanding == 105
+    else
+      days_outstanding == 47
+    end
+  end
+
+  def expire
+    if self.job_type == "Materials & Labor"
+      days_outstanding > 110
+    else
+      days_outstanding > 50
+    end
   end
 
   def status_update
@@ -51,7 +87,25 @@ class Job < ApplicationRecord
     if job.late? && job.status == "good standing"
       job.status = "NOI Eligible"
       job.save
-      # self.save
+      # FirstNoticeEmail.new.send(job) if job.job_type == "Materials & Labor"
+      # JustLaborFirstNoticeEmail.new.send(job) if job.job_type == "Labor"
+      # CustomerText.new.job_text_notification
+    elsif job.second_notice && job.status != 2 && job.status != 3 && job.status != 4
+      # SecondNoticeEmail.new.send(job) if job.job_type == "Materials & Labor"
+      # JustLaborSecondNoticeEmail.new.send(job) if job.job_type == "Labor"
+      # CustomerText.new.job_text_notification
+    elsif job.third_notice && job.status != 2 && job.status != 3 && job.status != 4
+      # ThirdNoticeEmail.new.send(job)
+      # CustomerText.new.job_text_notification
+    elsif job.fourth_notice && job.status != 2 && job.status != 3 && job.status != 4
+      # FourthNoticeEmail.new.send(job)
+      # CustomerText.new.job_text_notification
+    elsif job.final_notice && job.status != 2 && job.status != 3 && job.status != 4
+      # FinalNoticeEmail.new.send(job)
+      # CustomerText.new.final_text_notification
+    elsif job.expire && job.status != 2 && job.status != 3
+      job.status = 4
+      job.save
     end
   end
 end
