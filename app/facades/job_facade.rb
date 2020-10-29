@@ -1,8 +1,10 @@
-class JobsFacade
+class JobFacade
+  
   def update_jobs
     jobs = Job.all
-    jobs.each do |job|
+    jobs.map do |job|
       job.status_update
     end
+    jobs
   end
 end
