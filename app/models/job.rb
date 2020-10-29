@@ -29,16 +29,44 @@ class Job < ApplicationRecord
     (today - date_time).to_i
   end
 
-  def second_notice
+  def late?
+    days_outstanding >= 45
   end
 
-  def late?
-    days_outstanding == 45
+  def second_notice
+    days_outstanding == 75
+  end
+
+  def third_notice
+    days_outstanding == 90
+  end
+
+  def fourth_notice
+    days_outstanding == 100
+  end
+
+  def final_notice
+    days_outstanding == 105
+  end
+
+  def expire
+    days_outstanding > 110
   end
 
   def status_update
-    if self.late?
+    if self.late? && self.status == 0
       self.status = 1
+      FirstNoticeEmail.new.send(self)
+    elsif self.second_notice && self.status != 2 && self.status != 3 && self.status != 4
+      SecondNoticeEmail.new.send(self)
+    elsif self.third_notice && self.status != 2 && self.status != 3 && self.status != 4
+      ThirdNoticeEmail.new.send(self)
+    elsif self.fourth_notice && self.status != 2 && self.status != 3 && self.status != 4
+      FourthNoticeEmail.new.send(self)
+    elsif self.final_notice && self.status != 2 && self.status != 3 && self.status != 4
+      FinalNoticeEmail.new.send(self)
+    elsif self.expire
+      self.status = 4
     end
   end
 end
