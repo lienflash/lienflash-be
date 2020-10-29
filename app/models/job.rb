@@ -1,5 +1,6 @@
 require 'date'
 class Job < ApplicationRecord
+  before_validation :default_date, :default_status
 
   validates :job_type, presence: true
   validates :job_site_contact_name, presence: true
@@ -22,6 +23,14 @@ class Job < ApplicationRecord
   # validates :business_zip_code
   # validates :additional_info
   enum status: { "good standing": 0, "NOI Eligible": 1, "NOI filed": 2, "Lien Filed": 3, "inactive": 4}
+
+  def default_date
+    self.completion_date ||= DateTime.now
+  end
+
+  def default_status
+    self.status ||= 0
+  end
 
   def days_outstanding
     today = Date.today
