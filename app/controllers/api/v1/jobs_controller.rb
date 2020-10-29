@@ -1,7 +1,3 @@
-require 'sendgrid-ruby'
-require 'twilio-ruby'
-include SendGrid
-
 class Api::V1::JobsController < ApplicationController
 
   def index
@@ -16,18 +12,18 @@ class Api::V1::JobsController < ApplicationController
     job = Job.new(job_params)
     if job.save
       render json: JobSerializer.new(job), status: 201
-      #id = job.id
-      #JobCreationWorker.perform_at(2.minutes.from_now, id, 2)
+      JobCreationEmail.new.send(job)
+      CustomerText.new.job_creation
     else
       render json: {"data":{"errors": job.errors.full_messages}}, status: 400
     end
   end
-  
+
   def update
-    job = Job.find(params[:id]) 
+    job = Job.find(params[:id])
     job.status_update
     render json: JobSerializer.new(job), status: 200
-  end 
+  end
 
   private
 

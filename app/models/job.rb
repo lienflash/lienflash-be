@@ -3,7 +3,7 @@ class Job < ApplicationRecord
 
   validates :job_type, presence: true
   validates :job_site_contact_name, presence: true
-  validates :job_site_name, presence: true
+  # validates :job_site_name
   validates :job_site_address, presence: true
   # validates :job_site_address_line_2
   validates :job_site_city, presence: true
@@ -25,20 +25,77 @@ class Job < ApplicationRecord
 
   def days_outstanding
     today = Date.today
-    date_time = DateTime.parse("#{self.date_of_completion}")
+    date_time = DateTime.parse("#{self.completion_date}")
     (today - date_time).to_i
   end
 
-  def second_notice
+  def late?
+    if self.job_type == "Materials & Labor"
+      days_outstanding >= 45
+    else
+      days_outstanding >= 30
+    end
   end
 
-  def late?
-    days_outstanding == 45
+  def second_notice
+    if self.job_type == "Materials & Labor"
+      days_outstanding == 75
+    else
+      days_outstanding == 45
+    end
+  end
+
+  def third_notice
+    if self.job_type == "Materials & Labor"
+      days_outstanding == 90
+    end
+  end
+
+  def fourth_notice
+    if self.job_type == "Materials & Labor"
+      days_outstanding == 100
+    end
+  end
+
+  def final_notice
+    if self.job_type == "Materials & Labor"
+      days_outstanding == 105
+    else
+      days_outstanding == 47
+    end
+  end
+
+  def expire
+    if self.job_type == "Materials & Labor"
+      days_outstanding > 110
+    else
+      days_outstanding > 50 
+    end
   end
 
   def status_update
-    if self.late?
-      self.status = 1
+    job = Job.find(self.id)
+    if job.late? && job.status == "good standing" 
+      job.status = "NOI Eligible"
+      job.save
+      #FirstNoticeEmail.new.send(self) if self.job_type == "Materials & Labor"
+      #JustLaborFirstNoticeEmail.new.send(self) if self.job_type == "Labor"
+      #CustomerText.new.job_text_notification
+    elsif self.second_notice && self.status != 2 && self.status != 3 && self.status != 4
+      SecondNoticeEmail.new.send(self) if self.job_type == "Materials & Labor"
+      JustLaborSecondNoticeEmail.new.send(self) if self.job_type == "Labor"
+      CustomerText.new.job_text_notification
+    elsif self.third_notice && self.status != 2 && self.status != 3 && self.status != 4
+      ThirdNoticeEmail.new.send(self)
+      CustomerText.new.job_text_notification
+    elsif self.fourth_notice && self.status != 2 && self.status != 3 && self.status != 4
+      FourthNoticeEmail.new.send(self)
+      CustomerText.new.job_text_notification
+    elsif self.final_notice && self.status != 2 && self.status != 3 && self.status != 4
+      FinalNoticeEmail.new.send(self)
+      CustomerText.new.final_text_notification
+    elsif self.expire && self.status != 2 && self.status != 3
+      self.status = 4
     end
   end
 end
