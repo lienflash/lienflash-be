@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :job do
-    job_type { "Roofing" }
+    job_type { "Materials & Labor" }
     sequence(:job_site_contact_name) { |n| "Contact #{n}" }
     sequence(:job_site_name) { |n| "Name #{n}" }
     job_site_address { Faker::Address.street_address }

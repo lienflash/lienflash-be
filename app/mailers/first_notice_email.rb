@@ -5,7 +5,7 @@ include ActionView::Helpers::NumberHelper
 class FirstNoticeEmail
   def send(job)
     from = Email.new(email: 'josh.tukman@gmail.com')
-    to = Email.new(email: 'nickedwin85@gmail.com')
+    to = Email.new(email: 'josh.tukman@gmail.com')
     subject = "A job on Lien Flash requires your attention"
     content = Content.new(type: 'text/plain', value:
       "The job located at: #{job.job_site_address} #{job.job_site_city}, #{job.job_site_state} #{job.job_site_zip_code} has been unpaid for 45 days.
