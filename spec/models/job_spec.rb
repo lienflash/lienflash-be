@@ -61,72 +61,72 @@ RSpec.describe Job, type: :model do
       expect(job_labor.late?).to be true
     end
 
-    it "second notice" do
+    it "second notice?" do
       job_tm = create(:job, completion_date: 74.days.ago)
       job_labor = create(:job, job_type: "Labor", completion_date: 44.days.ago)
-      expect(job_tm.second_notice).to be false
-      expect(job_labor.second_notice).to be false
+      expect(job_tm.second_notice?).to be false
+      expect(job_labor.second_notice?).to be false
       travel(1.day)
-      expect(job_tm.second_notice).to be true
-      expect(job_labor.second_notice).to be true
+      expect(job_tm.second_notice?).to be true
+      expect(job_labor.second_notice?).to be true
       travel(1.day)
-      expect(job_tm.second_notice).to be false
-      expect(job_labor.second_notice).to be false
+      expect(job_tm.second_notice?).to be false
+      expect(job_labor.second_notice?).to be false
     end
 
-    it "third notice" do
+    it "third notice?" do
       job_tm = create(:job, completion_date: 89.days.ago)
       job_labor = create(:job, job_type: "Labor", completion_date: 89.days.ago)
-      expect(job_tm.third_notice).to be false
-      expect(job_labor.third_notice).to be nil
+      expect(job_tm.third_notice?).to be false
+      expect(job_labor.third_notice?).to be nil
       travel(1.day)
-      expect(job_tm.third_notice).to be true
-      expect(job_labor.third_notice).to be nil
+      expect(job_tm.third_notice?).to be true
+      expect(job_labor.third_notice?).to be nil
       travel(1.day)
-      expect(job_tm.third_notice).to be false
-      expect(job_labor.third_notice).to be nil
+      expect(job_tm.third_notice?).to be false
+      expect(job_labor.third_notice?).to be nil
     end
 
-    it "fourth notice" do
+    it "fourth notice?" do
       job_tm = create(:job, completion_date: 99.days.ago)
       job_labor = create(:job, job_type: "Labor", completion_date: 99.days.ago)
-      expect(job_tm.fourth_notice).to be false
-      expect(job_labor.fourth_notice).to be nil
+      expect(job_tm.fourth_notice?).to be false
+      expect(job_labor.fourth_notice?).to be nil
       travel(1.day)
-      expect(job_tm.fourth_notice).to be true
-      expect(job_labor.fourth_notice).to be nil
+      expect(job_tm.fourth_notice?).to be true
+      expect(job_labor.fourth_notice?).to be nil
       travel(1.day)
-      expect(job_tm.fourth_notice).to be false
-      expect(job_labor.fourth_notice).to be nil
+      expect(job_tm.fourth_notice?).to be false
+      expect(job_labor.fourth_notice?).to be nil
     end
 
-    it "final notice" do
+    it "final notice?" do
       job_tm = create(:job, completion_date: 104.days.ago)
       job_labor = create(:job, job_type: "Labor", completion_date: 46.days.ago)
-      expect(job_tm.final_notice).to be false
-      expect(job_labor.final_notice).to be false
+      expect(job_tm.final_notice?).to be false
+      expect(job_labor.final_notice?).to be false
       travel(1.day)
-      expect(job_tm.final_notice).to be true
-      expect(job_labor.final_notice).to be true
+      expect(job_tm.final_notice?).to be true
+      expect(job_labor.final_notice?).to be true
       travel(1.day)
-      expect(job_tm.final_notice).to be false
-      expect(job_labor.final_notice).to be false
+      expect(job_tm.final_notice?).to be false
+      expect(job_labor.final_notice?).to be false
     end
 
-    it "expire" do
+    it "expired?" do
       job_tm = create(:job, completion_date: 109.days.ago)
       job_labor = create(:job, job_type: "Labor", completion_date: 49.days.ago)
-      expect(job_tm.expire).to be false
-      expect(job_labor.expire).to be false
+      expect(job_tm.expired?).to be false
+      expect(job_labor.expired?).to be false
       travel(1.day)
-      expect(job_tm.expire).to be false
-      expect(job_labor.expire).to be false
+      expect(job_tm.expired?).to be false
+      expect(job_labor.expired?).to be false
       travel(1.day)
-      expect(job_tm.expire).to be true
-      expect(job_labor.expire).to be true
+      expect(job_tm.expired?).to be true
+      expect(job_labor.expired?).to be true
       travel(1.day)
-      expect(job_tm.expire).to be true
-      expect(job_labor.expire).to be true
+      expect(job_tm.expired?).to be true
+      expect(job_labor.expired?).to be true
     end
 
     it "status_update for job_type 'Materials & Labor'" do
@@ -143,7 +143,7 @@ RSpec.describe Job, type: :model do
       job2.status_update
       job1 = Job.first
       job2 = Job.last
-      
+
       expect(job1.status).to eq("NOI Eligible")
       expect(job2.status).to eq("NOI filed")
 
@@ -154,7 +154,7 @@ RSpec.describe Job, type: :model do
       job1 = Job.first
       job2 = Job.last
       # We are hitting the right conditional but need to test the notifications
-      
+
       #testing 3rd notice
       travel(15.day)
       job1.status_update
@@ -162,7 +162,7 @@ RSpec.describe Job, type: :model do
       job1 = Job.first
       job2 = Job.last
       # We are hitting the right conditional but need to test the notifications
-      
+
       #testing 4th notice
       travel(10.day)
       job1.status_update
@@ -184,7 +184,7 @@ RSpec.describe Job, type: :model do
       job2.status_update
       job1 = Job.first
       job2 = Job.last
-      
+
       expect(job2.status).to eq("NOI filed")
       expect(job1.status).to eq("inactive")
     end
@@ -202,7 +202,7 @@ RSpec.describe Job, type: :model do
       job2.status_update
       job1 = Job.first
       job2 = Job.last
-      
+
       expect(job1.status).to eq("NOI Eligible")
       expect(job2.status).to eq("NOI filed")
 
@@ -213,7 +213,7 @@ RSpec.describe Job, type: :model do
       job1 = Job.first
       job2 = Job.last
       # We are hitting the right conditional but need to test the notifications
-      
+
       #testing final notice
       travel(2.day)
       job1.status_update
@@ -221,7 +221,7 @@ RSpec.describe Job, type: :model do
       job1 = Job.first
       job2 = Job.last
       # We are hitting the right conditional but need to test the notifications
-      
+
       #testing expired?
       travel(3.day)
       job1.status_update
@@ -231,7 +231,7 @@ RSpec.describe Job, type: :model do
       # We are hitting the right conditional but need to test the notifications
       expect(job1.status).to eq("inactive")
       expect(job2.status).to eq("NOI filed")
-      
+
     end
   end
 end
