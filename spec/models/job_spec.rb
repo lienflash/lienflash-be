@@ -44,11 +44,89 @@ RSpec.describe Job, type: :model do
     end
 
     it "late?" do
-      job = create(:job)
+      job = create(:job, completion_date: 44.days.ago)
       job2 = create(:job, completion_date: 1.days.ago)
-      expect(job.days_outstanding).to eq(45)
+      job_labor = create(:job, job_type: "Labor", completion_date: 29.days.ago)
+      expect(job.days_outstanding).to eq(44)
+      expect(job.late?).to be false
+      expect(job2.late?).to be false
+      expect(job_labor.late?).to be false
+      travel(1.day)
       expect(job.late?).to be true
       expect(job2.late?).to be false
+      expect(job_labor.late?).to be true
+      travel(1.day)
+      expect(job.late?).to be true
+      expect(job2.late?).to be false
+      expect(job_labor.late?).to be true
+    end
+
+    it "second notice" do
+      job_tm = create(:job, completion_date: 74.days.ago)
+      job_labor = create(:job, job_type: "Labor", completion_date: 44.days.ago)
+      expect(job_tm.second_notice).to be false
+      expect(job_labor.second_notice).to be false
+      travel(1.day)
+      expect(job_tm.second_notice).to be true
+      expect(job_labor.second_notice).to be true
+      travel(1.day)
+      expect(job_tm.second_notice).to be false
+      expect(job_labor.second_notice).to be false
+    end
+
+    it "third notice" do
+      job_tm = create(:job, completion_date: 89.days.ago)
+      job_labor = create(:job, job_type: "Labor", completion_date: 89.days.ago)
+      expect(job_tm.third_notice).to be false
+      expect(job_labor.third_notice).to be nil
+      travel(1.day)
+      expect(job_tm.third_notice).to be true
+      expect(job_labor.third_notice).to be nil
+      travel(1.day)
+      expect(job_tm.third_notice).to be false
+      expect(job_labor.third_notice).to be nil
+    end
+
+    it "fourth notice" do
+      job_tm = create(:job, completion_date: 99.days.ago)
+      job_labor = create(:job, job_type: "Labor", completion_date: 99.days.ago)
+      expect(job_tm.fourth_notice).to be false
+      expect(job_labor.fourth_notice).to be nil
+      travel(1.day)
+      expect(job_tm.fourth_notice).to be true
+      expect(job_labor.fourth_notice).to be nil
+      travel(1.day)
+      expect(job_tm.fourth_notice).to be false
+      expect(job_labor.fourth_notice).to be nil
+    end
+
+    it "final notice" do
+      job_tm = create(:job, completion_date: 104.days.ago)
+      job_labor = create(:job, job_type: "Labor", completion_date: 46.days.ago)
+      expect(job_tm.final_notice).to be false
+      expect(job_labor.final_notice).to be false
+      travel(1.day)
+      expect(job_tm.final_notice).to be true
+      expect(job_labor.final_notice).to be true
+      travel(1.day)
+      expect(job_tm.final_notice).to be false
+      expect(job_labor.final_notice).to be false
+    end
+
+    it "expire" do
+      job_tm = create(:job, completion_date: 109.days.ago)
+      job_labor = create(:job, job_type: "Labor", completion_date: 49.days.ago)
+      expect(job_tm.expire).to be false
+      expect(job_labor.expire).to be false
+      travel(1.day)
+      expect(job_tm.expire).to be false
+      expect(job_labor.expire).to be false
+      travel(1.day)
+      expect(job_tm.expire).to be true
+      expect(job_labor.expire).to be true
+      travel(1.day)
+      expect(job_tm.expire).to be true
+      expect(job_labor.expire).to be true
     end
 
     it "status_update" do
