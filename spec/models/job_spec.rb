@@ -51,19 +51,109 @@ RSpec.describe Job, type: :model do
       expect(job2.late?).to be false
     end
 
-    it "status_update" do
+    it "status_update for job_type 'Materials & Labor'" do
       job1 = create(:job, completion_date: 44.days.ago)
       job2 = create(:job, completion_date: 44.days.ago, status: 2)
       job1.status_update
       job2.status_update
+
       expect(job1.status).to eq("good standing")
       expect(job2.status).to eq("NOI filed")
+
       travel(1.day)
       job1.status_update
       job2.status_update
       job1 = Job.first
+      job2 = Job.last
+      
       expect(job1.status).to eq("NOI Eligible")
       expect(job2.status).to eq("NOI filed")
+
+      #testing 2nd notice
+      travel(30.day)
+      job1.status_update
+      job2.status_update
+      job1 = Job.first
+      job2 = Job.last
+      # We are hitting the right conditional but need to test the notifications
+      
+      #testing 3rd notice
+      travel(15.day)
+      job1.status_update
+      job2.status_update
+      job1 = Job.first
+      job2 = Job.last
+      # We are hitting the right conditional but need to test the notifications
+      
+      #testing 4th notice
+      travel(10.day)
+      job1.status_update
+      job2.status_update
+      job1 = Job.first
+      job2 = Job.last
+      # We are hitting the right conditional but need to test the notifications
+
+      #testing final notice
+      travel(5.day)
+      job1.status_update
+      job2.status_update
+      job1 = Job.first
+      job2 = Job.last
+
+      #testing expired
+      travel(5.day)
+      job1.status_update
+      job2.status_update
+      job1 = Job.first
+      job2 = Job.last
+      
+      expect(job2.status).to eq("NOI filed")
+      expect(job1.status).to eq("inactive")
+    end
+    it "status_update for job_type 'Labor'" do
+      job1 = create(:job, job_type: "Labor", completion_date: 29.days.ago)
+      job2 = create(:job, job_type: "Labor", completion_date: 29.days.ago, status: 2)
+      job1.status_update
+      job2.status_update
+
+      expect(job1.status).to eq("good standing")
+      expect(job2.status).to eq("NOI filed")
+
+      travel(1.day)
+      job1.status_update
+      job2.status_update
+      job1 = Job.first
+      job2 = Job.last
+      
+      expect(job1.status).to eq("NOI Eligible")
+      expect(job2.status).to eq("NOI filed")
+
+      #testing 2nd notice
+      travel(15.day)
+      job1.status_update
+      job2.status_update
+      job1 = Job.first
+      job2 = Job.last
+      # We are hitting the right conditional but need to test the notifications
+      
+      #testing final notice
+      travel(2.day)
+      job1.status_update
+      job2.status_update
+      job1 = Job.first
+      job2 = Job.last
+      # We are hitting the right conditional but need to test the notifications
+      
+      #testing expired?
+      travel(3.day)
+      job1.status_update
+      job2.status_update
+      job1 = Job.first
+      job2 = Job.last
+      # We are hitting the right conditional but need to test the notifications
+      expect(job1.status).to eq("inactive")
+      expect(job2.status).to eq("NOI filed")
+      
     end
   end
 end
