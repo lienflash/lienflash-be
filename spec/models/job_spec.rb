@@ -119,8 +119,8 @@ RSpec.describe Job, type: :model do
       expect(job_tm.expired?).to be false
       expect(job_labor.expired?).to be false
       travel(1.day)
-      expect(job_tm.expired?).to be false
-      expect(job_labor.expired?).to be false
+      expect(job_tm.expired?).to be true
+      expect(job_labor.expired?).to be true
       travel(1.day)
       expect(job_tm.expired?).to be true
       expect(job_labor.expired?).to be true
