@@ -7,7 +7,7 @@ describe "API V1 Users", type: 'request' do
         {
           name: "Timmy",
           business_name: "Timmy's plumbing",
-          email: "email1234@gmail.com",
+          email: "email12345@gmail.com",
           business_work_number: "555-123-4567",
           business_cell_number: "555-123-4567",
           business_address: "123 Main St.",
@@ -30,7 +30,7 @@ describe "API V1 Users", type: 'request' do
         post "/api/v1/users", params: valid_params
 
         @user = User.last
-        expect(@user.email).to eq("email1234@gmail.com")
+        expect(@user.email).to eq("email12345@gmail.com")
         expect(@user.business_name).to eq("Timmy's plumbing")
 
         data = JSON.parse(response.body)
@@ -42,7 +42,7 @@ describe "API V1 Users", type: 'request' do
           {
             name: "Timmy",
             business_name: "Timmy's plumbing",
-            email: "email1234",
+            email: "email123",
             business_work_number: "555-123-4567",
             business_cell_number: "555-123-4567",
             business_address: "123 Main St.",
@@ -66,7 +66,7 @@ describe "API V1 Users", type: 'request' do
           {
             name: "Timmy",
             business_name: "Timmy's plumbing",
-            email: "email1234@gmail.com",
+            email: "email123456@gmail.com",
             business_work_number: "555-123-4567",
             business_cell_number: "555-123-4567",
             business_address: "123 Main St.",
