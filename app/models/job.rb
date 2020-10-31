@@ -24,6 +24,8 @@ class Job < ApplicationRecord
   # validates :additional_info
   enum status: { "good standing": 0, "NOI Eligible": 1, "NOI filed": 2, "Lien Filed": 3, "inactive": 4}
 
+  # belongs_to :user
+
   def default_date
     self.completion_date ||= DateTime.now
   end
