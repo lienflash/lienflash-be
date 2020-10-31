@@ -4,5 +4,5 @@ class JobFacade
     jobs.each do |job|
       job.status_update
     end
-  end 
+  end
 end
