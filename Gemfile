@@ -27,7 +27,6 @@ group :development, :test do
   gem 'nyan-cat-formatter'
   gem 'launchy'
   gem 'capybara'
-  gem 'factory_bot_rails'
   gem 'activerecord-reset-pk-sequence'
   gem 'simplecov'
   gem 'factory_bot_rails'
