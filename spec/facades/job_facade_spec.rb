@@ -18,7 +18,8 @@ RSpec.describe  "Rake Tasks" do
       JobFacade.new.update_jobs
 
       job1 = Job.first
-
+      job3 = Job.last
+      
       expect(job1.status).to eq("NOI Eligible")
       expect(job2.status).to eq("good standing")
       expect(job3.status).to eq("NOI filed")
