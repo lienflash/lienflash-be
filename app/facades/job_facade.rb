@@ -3,6 +3,7 @@ class JobFacade
     jobs = Job.all
     jobs.map do |job|
       job.status_update
+      job.notifications
     end
     jobs
   end
