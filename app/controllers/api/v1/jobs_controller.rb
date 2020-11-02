@@ -21,7 +21,11 @@ class Api::V1::JobsController < ApplicationController
 
   def update
     job = Job.find(params[:id])
-    job.status_update
+    if params[:status] == "4" 
+      job.status = 4
+    else
+      job.status_update
+    end 
     render json: JobSerializer.new(job), status: 200
   end
 
