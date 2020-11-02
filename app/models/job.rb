@@ -42,11 +42,6 @@ class Job < ApplicationRecord
 
   def late?
     days_outstanding >=10
-    # if self.job_type == "Materials & Labor"
-    #   days_outstanding >= 45
-    # else
-    #   days_outstanding >= 30
-    # end
   end
 
   def first_notice?
@@ -109,23 +104,24 @@ class Job < ApplicationRecord
 
   def notifications
     job = Job.find(self.id)
+    # user = User.where(user_id: job.user_id)
     if job.status_of_NOI_eligible? && job.first_notice?
-      # FirstNoticeEmail.new.send(job) if job.job_type == "Materials & Labor"
-      # JustLaborFirstNoticeEmail.new.send(job) if job.job_type == "Labor"
+      # UserNotifierMailer.send_first_notice_email(job, user).deliver_now if job.job_type == "Materials & Labor"
+      # UserNotifierMailer.send_just_labor_first_notice_email(job, user).deliver_now if job.job_type == "Labor"
       # CustomerText.new.job_text_notification
     elsif job.status_of_NOI_eligible? && job.second_notice?
-      # SecondNoticeEmail.new.send(job) if job.job_type == "Materials & Labor"
-      # JustLaborSecondNoticeEmail.new.send(job) if job.job_type == "Labor"
+      # UserNotifierMailer.send_second_notice_email(job, user).deliver_now if job.job_type == "Materials & Labor"
+      # UserNotifierMailer.send_just_labor_second_notice_email(job, user).deliver_now if job.job_type == "Labor"
       # CustomerText.new.job_text_notification
     elsif job.status_of_NOI_eligible? && third_notice?
-      # ThirdNoticeEmail.new.send(job)
+      # UserNotifierMailer.send_third_notice_email(job, user).deliver_now
       # CustomerText.new.job_text_notification
     elsif job.status_of_NOI_eligible? && fourth_notice?
-      # FourthNoticeEmail.new.send(job)
+      # UserNotifierMailer.send_fourth_notice_email(job, user).deliver_now
       # CustomerText.new.job_text_notification
     elsif job.status_of_NOI_eligible? && final_notice?
-      # FinalNoticeEmail.new.send(job)
+      # UserNotifierMailer.send_final_notice_email(job, user).deliver_now
       # CustomerText.new.final_text_notification
-    end 
-  end 
+    end
+  end
 end

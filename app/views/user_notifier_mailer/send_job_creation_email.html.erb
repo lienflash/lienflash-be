@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Thank you for adding a new job, <%= @user.name %>!</h1>
+    <p>A new job located at: <%= @job.job_site_address %> <%= @job.job_site_city %>, <%= @job.job_site_state %> <%= @job.job_site_zip_code %> has been created using Lien Flash.</p>
+    <p>This job has an unpaid balance of <%= number_to_currency(@job.total_cost) %>.</p><br>
+    <p>In 45 days you will be given the option to create a Letter of Intent to File a Lien if payment has not been received.</p><br>
+    <p>Thank you for using Lien Flash!</p><br>
+    <p>Please do not reply to this email. This is a post-only, outbound email. We will be unable to respond to your reply.</p>
+    <p>Should you have any questions please reach out to us at: info@lienflash.com</p><br><br>
+    <p>© 2020 Lien Flash. All Rights Reserved.</p>
+  </body>
+</html>

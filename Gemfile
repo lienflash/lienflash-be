@@ -14,7 +14,7 @@ gem 'figaro'
 gem 'faraday'
 gem 'travis'
 gem 'rack-cors'
-gem 'sendgrid-ruby'
+gem 'sendgrid-actionmailer'
 gem 'twilio-ruby'
 gem 'sidekiq'
 gem 'whenever', require: false

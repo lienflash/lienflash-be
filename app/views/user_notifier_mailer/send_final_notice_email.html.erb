@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>A job located at: <%= @job.job_site_address %> <%= @job.job_site_city %>, <%= @job.job_site_state %> <%= @job.job_site_zip_code %> still has an unpaid ballance of <%= number_to_currency(@job.total_cost) %></p><br>
+    <p>Would you like us to proceed with filing a Notice of Intent to file a lien?</p>
+    <p>If so please click <%= link_to "here", "https://lienflash.herokuapp.com/" %> to login where you can select the job and click "Submit NOI"</p>
+    <p>This is your last opportunity to file a Notice of Intent to file a lien. If you do not file today you lose your rights to receive payment for this job.</p>
+    <p>If you have received payment on this job already, please click <%= link_to "here", "https://lienflash.herokuapp.com/" %> to login where you can select the job and click "Remove Job"</p>
+    <p>Thank you for using Lien Flash!</p><br>
+    <p>Please do not reply to this email. This is a post-only, outbound email. We will be unable to respond to your reply.</p>
+    <p>Should you have any questions please reach out to us at: info@lienflash.com</p><br><br>
+    <p>© 2020 Lien Flash. All Rights Reserved.</p>
+  </body>
+</html>
