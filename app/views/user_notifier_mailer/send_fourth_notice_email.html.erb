@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>A job located at: <%= @job.job_site_address %> <%= @job.job_site_city %>, <%= @job.job_site_state %> <%= @job.job_site_zip_code %> has been unpaid for 100 days.</p>
+    <p>This job has an unpaid balance of <%= number_to_currency(@job.total_cost) %>.</p><br>
+    <p>Would you like us to proceed with filing a Notice of Intent to file a lien?</p>
+    <p>If so please click <%= link_to "here", "https://lienflash.herokuapp.com/" %> to login where you can select the job and click "Submit NOI"</p>
+    <p>If not you will be reminded again in 5 days.</p><br>
+    <p>*Please note, there are 5 days remaining to file this NOI. If that time elapses you will lose the right to file a lien.</p>
+    <p>If you have received payment on this job already, please click <%= link_to "here", "https://lienflash.herokuapp.com/" %> to login where you can select the job and click "Remove Job"</p>
+    <p>Thank you for using Lien Flash!</p><br>
+    <p>Please do not reply to this email. This is a post-only, outbound email. We will be unable to respond to your reply.</p>
+    <p>Should you have any questions please reach out to us at: info@lienflash.com</p><br><br>
+    <p>© 2020 Lien Flash. All Rights Reserved.</p>
+  </body>
+</html>
