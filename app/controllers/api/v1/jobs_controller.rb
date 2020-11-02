@@ -21,11 +21,12 @@ class Api::V1::JobsController < ApplicationController
 
   def update
     job = Job.find(params[:id])
-    if params[:status] == "4" 
-      job.status = 4
+    if params[:status] == "4"
+      job.status = "inactive"
+      job.save
     else
       job.status_update
-    end 
+    end
     render json: JobSerializer.new(job), status: 200
   end
 
