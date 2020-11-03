@@ -22,7 +22,7 @@ class Job < ApplicationRecord
   # validates :business_state
   # validates :business_zip_code
   # validates :additional_info
-  enum status: { "good standing": 0, "NOI Eligible": 1, "NOI filed": 2, "Lien Filed": 3, "inactive": 4}
+  enum status: { "good standing": 0, "NOI Eligible": 1, "NOI Requested": 2, "NOI filed": 3, "Lien Filed": 4, "inactive": 5}
 
   # belongs_to :user
 
@@ -97,7 +97,7 @@ class Job < ApplicationRecord
     if job.late? && job.status == "good standing"
       job.status = 1
     elsif job.expired? && job.status_of_NOI_eligible?
-      job.status = 4
+      job.status = 5
     end
     job.save
   end

@@ -9,7 +9,7 @@ RSpec.describe  "Rake Tasks" do
       job2 = create(:job, completion_date: 1.days.ago)
       job3 = create(:job, status: "NOI filed", completion_date: 44.days.ago)
       jobs = [job1, job2, job3]
-      
+  
       expect(job1.status).to eq("good standing")
       expect(job2.status).to eq("good standing")
       expect(job3.status).to eq("NOI filed")

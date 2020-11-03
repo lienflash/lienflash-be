@@ -131,7 +131,7 @@ RSpec.describe Job, type: :model do
 
   it "status_update for job_type 'Materials & Labor'" do
     job1 = create(:job, completion_date: 30.days.ago)
-    job2 = create(:job, completion_date: 30.days.ago, status: 2)
+    job2 = create(:job, completion_date: 30.days.ago, status: 3)
     job1.status_update
     job2.status_update
 
