@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 describe "API V1 Jobs", type: 'request' do
-  describe "POST /api/v1/jobs" do
+  describe "POST /api/v1/user/jobs" do
+    before(:each) do
+      @user1 = create(:user)
+    end
+
     context "with valid parameters" do
       let(:valid_params) do
         {
@@ -16,12 +20,13 @@ describe "API V1 Jobs", type: 'request' do
           description_of_work: "We fixed a toilet",
           labor_cost: 100.00,
           material_cost: 150.00,
-          total_cost: 250.00
+          total_cost: 250.00,
+          user_id: @user1.id
         }
       end
 
       it "creates a new job" do
-        post "/api/v1/jobs", params: valid_params
+        post "/api/v1/user/#{@user1.id}/jobs", params: valid_params
         expect(response).to be_successful
         expect(response.status).to eq(201)
       end

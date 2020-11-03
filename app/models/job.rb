@@ -22,9 +22,9 @@ class Job < ApplicationRecord
   # validates :business_state
   # validates :business_zip_code
   # validates :additional_info
-  enum status: { "good standing": 0, "NOI Eligible": 1, "NOI Requested": 2, "NOI filed": 3, "Lien Filed": 4, "inactive": 5}
+  enum status: { "Good Standing": 0, "NOI Eligible": 1, "NOI Requested": 2, "NOI Filed": 3, "Lien Filed": 4, "Inactive": 5}
 
-  # belongs_to :user
+  belongs_to :user
 
   def default_date
     self.completion_date ||= DateTime.now
@@ -41,7 +41,7 @@ class Job < ApplicationRecord
   end
 
   def late?
-    days_outstanding >=10
+    days_outstanding >= 10
   end
 
   def first_notice?
@@ -94,7 +94,7 @@ class Job < ApplicationRecord
 
   def status_update
     job = Job.find(self.id)
-    if job.late? && job.status == "good standing"
+    if job.late? && job.status == "Good Standing"
       job.status = 1
     elsif job.expired? && job.status_of_NOI_eligible?
       job.status = 5
