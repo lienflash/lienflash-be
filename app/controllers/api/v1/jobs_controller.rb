@@ -38,6 +38,8 @@ class Api::V1::JobsController < ApplicationController
     if params[:status] == "4"
       job.status = "inactive"
       job.save
+    elsif params[:status] == "2"
+      job.status = "NOI Requested"
     else
       job.status_update
     end
