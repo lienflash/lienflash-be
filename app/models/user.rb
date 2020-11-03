@@ -12,5 +12,5 @@ class User < ApplicationRecord
   validates_presence_of :password, require: true
 
   has_secure_password
-  # has_many :jobs 
+  has_many :jobs 
 end
