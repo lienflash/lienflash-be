@@ -14,4 +14,16 @@ FactoryBot.define do
     sequence(:total_cost) { |n| ("#{n}".to_i)*3 }
     status { 0 }
   end
+
+  factory :user do
+  name { Faker::Name.name }
+  business_name { Faker::App.name }
+  email { Faker::Internet.email }
+  business_cell_number { Faker::PhoneNumber.cell_phone }
+  business_address { Faker::Address.street_address }
+  business_city { Faker::Address.city }
+  business_state { Faker::Address.state_abbr }
+  business_zip_code { Faker::Address.zip }
+  password { Faker::Games::DnD.klass }
+  end
 end

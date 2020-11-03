@@ -1,7 +1,12 @@
 require 'rails_helper'
 
 Rails.describe "Jobs Facade" do
+  before(:each) do
+    @user1 = create(:user)
+  end
+  
   it "can update jobs to NOI eligible when late" do
+
     job1 = Job.create(
       job_type: "Labor",
           job_site_contact_name: "Tim",
@@ -14,7 +19,8 @@ Rails.describe "Jobs Facade" do
           description_of_work: "We fixed a toilet",
           labor_cost: 100.00,
           material_cost: 150.00,
-          total_cost: 250.00
+          total_cost: 250.00,
+          user_id: @user1.id
     )
     job2 = Job.create(
       job_type: "Labor",
@@ -28,9 +34,10 @@ Rails.describe "Jobs Facade" do
           description_of_work: "We fixed a toilet",
           labor_cost: 100.00,
           material_cost: 150.00,
-          total_cost: 250.00
+          total_cost: 250.00,
+          user_id: @user1.id
     )
-    expect(job2.status).to eq("good standing")
+    expect(job2.status).to eq("Good Standing")
     JobFacade.new.update_jobs
     job2 = Job.last
     expect(job2.status).to eq("NOI Eligible")
