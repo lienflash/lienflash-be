@@ -10,20 +10,7 @@ class Api::V1::JobsController < ApplicationController
 
   def create
     job = Job.new(job_params)
-    # user = User.find(params[:user_id])
-    # user = User.create(
-    #     name: "Timmy",
-    #     business_name: "Timmy's plumbing",
-    #     email: "nickedwin85@gmail.com",
-    #     business_work_number: "555-123-4567",
-    #     business_cell_number: "555-123-4567",
-    #     business_address: "123 Main St.",
-    #     business_city: "Denver",
-    #     business_state: "CO",
-    #     business_zip_code: "80218",
-    #     password: "password1",
-    #     password_confirmation: "password1"
-    #   )
+    # user = User.find(job.user_id)
     if job.save
       # UserNotifierMailer.send_job_creation_email(job, user).deliver_now
       render json: JobSerializer.new(job), status: 201
@@ -35,12 +22,14 @@ class Api::V1::JobsController < ApplicationController
 
   def update
     job = Job.find(params[:id])
-    if params[:status] == "4"
-      job.status = "inactive"
-      job.save
+    if params[:status] == "5"
+      job.status = "Inactive"
+    elsif params[:status] == "2"
+      job.status = "NOI Requested"
     else
       job.status_update
     end
+    job.save
     render json: JobSerializer.new(job), status: 200
   end
 
