@@ -40,6 +40,7 @@ class Api::V1::JobsController < ApplicationController
       job.save
     elsif params[:status] == "2"
       job.status = "NOI Requested"
+      job.save
     else
       job.status_update
     end
