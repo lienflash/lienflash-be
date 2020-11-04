@@ -32,14 +32,14 @@ RSpec.describe Job, type: :model do
   end
 
   it "default_date: today if not provided" do
-    fake_date_time = DateTime.now
-    allow(DateTime).to receive(:now) {fake_date_time}
+    fake_date_time = Time.current
+    allow(Time).to receive(:current) {fake_date_time}
     user1 = build(:user)
     job1 = build(:job, completion_date: "", user_id: user1.id)
     expect(job1.completion_date).to be_nil
     job1.save
     expect(job1.completion_date).to be_truthy
-    expect(job1.completion_date).to eq(DateTime.now)
+    expect(job1.completion_date).to eq(Time.current)
   end
 
   it "days_outstanding" do

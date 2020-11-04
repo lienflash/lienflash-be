@@ -27,7 +27,7 @@ class Job < ApplicationRecord
   belongs_to :user
 
   def default_date
-    self.completion_date ||= DateTime.now
+    self.completion_date ||= Time.current
   end
 
   def default_status
@@ -35,7 +35,7 @@ class Job < ApplicationRecord
   end
 
   def days_outstanding
-    today = Date.today
+    today = Date.current
     date_time = Date.parse("#{self.completion_date}")
     (today - date_time).to_i
   end
