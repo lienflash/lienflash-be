@@ -1,4 +1,4 @@
-module FakeSMS
+class FakeSMS
   FROM = ENV['SENDER_NUMBER']
 
   @@messages = []
