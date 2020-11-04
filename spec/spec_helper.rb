@@ -1,5 +1,5 @@
 require 'simplecov'
-require '/Users/litowhite/turing/mod4/projects/lienflash-be/app/services/fake_sms.rb'
+require '../app/services/fake_sms.rb'
 SimpleCov.start
 
 RSpec.configure do |config|

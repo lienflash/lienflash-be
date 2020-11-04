@@ -10,7 +10,7 @@ module FakeSMS
   def self.send_msg(recipient, sms_body)
     from = ENV['SENDER_NUMBER']
     to = "+12345672345"
-    body = "lets see if this works"
+    body = "Test text message"
     message = OpenStruct.new(from: from, to: to, body: body)
     @@messages << message
   end
