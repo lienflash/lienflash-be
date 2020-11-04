@@ -11,7 +11,6 @@ RSpec.describe CustomerText do
     end
 
     it "job creation" do
-      # to = @job.user.business_cell_number
       msg = "A new job has been created using Lien Flash."
       CustomerText.new.job_creation(@job)
       expect(TwilioService).to have_received(:send_msg).with(@to, msg)
