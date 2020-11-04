@@ -27,7 +27,7 @@ class Job < ApplicationRecord
   belongs_to :user
 
   def default_date
-    self.completion_date ||= Date.today
+    self.completion_date ||= DateTime.now
   end
 
   def default_status
