@@ -1,5 +1,5 @@
 require 'simplecov'
-# require '../app/services/fake_sms.rb'
+require_relative '../app/services/fake_sms.rb'
 SimpleCov.start
 
 RSpec.configure do |config|
