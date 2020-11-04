@@ -1,7 +1,9 @@
 require 'simplecov'
+require_relative '../app/services/fake_sms.rb'
 SimpleCov.start
 
 RSpec.configure do |config|
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -23,6 +25,10 @@ RSpec.configure do |config|
     # a real object. This is generally recommended, and will default to
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
+  end
+
+  config.before(:each) do
+    stub_const('TwilioService', FakeSMS)
   end
 
   # This option will default to `:apply_to_host_groups` in RSpec 4 (and will
