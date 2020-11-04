@@ -1,5 +1,5 @@
 require 'simplecov'
-require_relative '../app/services/fake_sms.rb'
+# require_relative '../app/services/fake_sms.rb'
 SimpleCov.start
 
 RSpec.configure do |config|
@@ -27,9 +27,9 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  config.before(:each) do
-    stub_const('TwilioService', FakeSMS)
-  end
+  # config.before(:each) do
+  #   stub_const('TwilioService', FakeSMS)
+  # end
 
   # This option will default to `:apply_to_host_groups` in RSpec 4 (and will
   # have no way to turn it off -- the option exists only for backwards
