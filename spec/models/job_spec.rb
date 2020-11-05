@@ -5,15 +5,11 @@ RSpec.describe Job, type: :model do
   describe 'validations' do
     it { should validate_presence_of :job_type }
     it { should validate_presence_of :job_site_contact_name }
-    # it { should validate_presence_of :job_site_name }
     it { should validate_presence_of :job_site_address }
     it { should validate_presence_of :job_site_city }
     it { should validate_presence_of :job_site_state }
     it { should validate_presence_of :job_site_zip_code }
-    # it { should validate_presence_of :completion_date }
     it { should validate_presence_of :description_of_work }
-    #it { should validate_presence_of :labor_cost }
-    #it { should validate_presence_of :material_cost }
     it { should validate_presence_of :total_cost }
   end
 
@@ -153,99 +149,100 @@ RSpec.describe Job, type: :model do
     expect(job1.status).to eq("Good Standing")
     expect(job2.status).to eq("NOI Filed")
 
-  #   travel(1.day)
-  #   job1.status_update
-  #   job2.status_update
-  #   job1 = Job.first
-  #   job2 = Job.last
+    travel(1.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
 
-  #   expect(job1.status).to eq("NOI Eligible")
-  #   expect(job2.status).to eq("NOI filed")
+    expect(job1.status).to eq("NOI Eligible")
+    expect(job2.status).to eq("NOI Filed")
 
-  #   #testing 2nd notice
-  #   travel(30.day)
-  #   job1.status_update
-  #   job2.status_update
-  #   job1 = Job.first
-  #   job2 = Job.last
-  #   # We are hitting the right conditional but need to test the notifications
+    #testing 2nd notice
+    travel(30.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
+    # We are hitting the right conditional but need to test the notifications
 
-  #   #testing 3rd notice
-  #   travel(15.day)
-  #   job1.status_update
-  #   job2.status_update
-  #   job1 = Job.first
-  #   job2 = Job.last
-  #   # We are hitting the right conditional but need to test the notifications
+    #testing 3rd notice
+    travel(15.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
+    # We are hitting the right conditional but need to test the notifications
 
-  #   #testing 4th notice
-  #   travel(10.day)
-  #   job1.status_update
-  #   job2.status_update
-  #   job1 = Job.first
-  #   job2 = Job.last
-  #   # We are hitting the right conditional but need to test the notifications
+    #testing 4th notice
+    travel(10.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
+    # We are hitting the right conditional but need to test the notifications
 
-  #   #testing final notice
-  #   travel(5.day)
-  #   job1.status_update
-  #   job2.status_update
-  #   job1 = Job.first
-  #   job2 = Job.last
+    #testing final notice
+    travel(5.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
 
-  #   #testing expired
-  #   travel(5.day)
-  #   job1.status_update
-  #   job2.status_update
-  #   job1 = Job.first
-  #   job2 = Job.last
+    #testing expired
+    travel(20.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
 
-  #   expect(job2.status).to eq("NOI filed")
-  #   expect(job1.status).to eq("inactive")
-  # end
-  # it "status_update for job_type 'Labor'" do
-  #   job1 = create(:job, job_type: "Labor", completion_date: 29.days.ago)
-  #   job2 = create(:job, job_type: "Labor", completion_date: 29.days.ago, status: 2)
-  #   job1.status_update
-  #   job2.status_update
+    expect(job2.status).to eq("NOI Filed")
+    expect(job1.status).to eq("Inactive")
+  end
+  it "status_update for job_type 'Labor'" do
+    user = create(:user)
+    job1 = create(:job, job_type: "Labor", completion_date: 29.days.ago, user_id: user.id)
+    job2 = create(:job, job_type: "Labor", completion_date: 29.days.ago, status: 3, user_id: user.id)
+    job1.status_update
+    job2.status_update
 
-  #   expect(job1.status).to eq("good standing")
-  #   expect(job2.status).to eq("NOI filed")
+    expect(job1.status).to eq("Good Standing")
+    expect(job2.status).to eq("NOI Filed")
 
-  #   travel(1.day)
-  #   job1.status_update
-  #   job2.status_update
-  #   job1 = Job.first
-  #   job2 = Job.last
+    travel(1.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
 
-  #   expect(job1.status).to eq("NOI Eligible")
-  #   expect(job2.status).to eq("NOI filed")
+    expect(job1.status).to eq("NOI Eligible")
+    expect(job2.status).to eq("NOI Filed")
 
-  #   #testing 2nd notice
-  #   travel(15.day)
-  #   job1.status_update
-  #   job2.status_update
-  #   job1 = Job.first
-  #   job2 = Job.last
-  #   # We are hitting the right conditional but need to test the notifications
+    #testing 2nd notice
+    travel(15.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
+    # We are hitting the right conditional but need to test the notifications
 
-  #   #testing final notice
-  #   travel(2.day)
-  #   job1.status_update
-  #   job2.status_update
-  #   job1 = Job.first
-  #   job2 = Job.last
-  #   # We are hitting the right conditional but need to test the notifications
+    #testing final notice
+    travel(2.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
+    # We are hitting the right conditional but need to test the notifications
 
-  #   #testing expired?
-  #   travel(3.day)
-  #   job1.status_update
-  #   job2.status_update
-  #   job1 = Job.first
-  #   job2 = Job.last
-  #   # We are hitting the right conditional but need to test the notifications
-  #   expect(job1.status).to eq("inactive")
-  #   expect(job2.status).to eq("NOI filed")
+    #testing expired?
+    travel(3.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
+    # We are hitting the right conditional but need to test the notifications
+    expect(job1.status).to eq("Inactive")
+    expect(job2.status).to eq("NOI Filed")
 
   end
   end
