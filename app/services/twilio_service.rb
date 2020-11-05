@@ -3,7 +3,7 @@ class TwilioService
   SID = ENV['TWILIO_SID']
   AUTH = ENV['TWILIO_AUTH_TOKEN']
 
-  cattr_accessor :client
+  attr_accessor :client
   
   def self.send_msg(recipient, sms_body)
     client.messages.create(
@@ -15,7 +15,7 @@ class TwilioService
 
   # private
 
-  def client
+  def self.client
     @client ||= Twilio::REST::Client.new(SID, AUTH)
   end
 end
