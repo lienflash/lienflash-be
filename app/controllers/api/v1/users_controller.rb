@@ -9,9 +9,14 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def show
+    user = User.find(params[:id])
+    render json: UserSerializer.new(user), status: 200
+  end
+
   private
 
   def user_params
-    params.permit(:name, :business_name, :email, :business_work_number, :business_cell_number, :business_address, :business_address_line2, :business_city, :business_state, :business_zip_code, :password, :password_confirmation)
+    params.permit(:name, :business_name, :email, :business_work_number, :business_cell_number, :business_address, :business_address_line2, :business_city, :business_state, :business_zip_code, :password, :password_confirmation, :id)
   end
 end

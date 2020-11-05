@@ -40,5 +40,6 @@ module LienflashBe
       api_key: ENV['SENDGRID_API_KEY'],
       raise_delivery_errors: true
     }
+    config.autoloader = :classic
   end
 end
