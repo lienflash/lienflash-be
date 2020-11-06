@@ -9,8 +9,8 @@ class Api::V1::JobsController < ApplicationController
   end
 
   def create
-    job = Job.new(job_params)
-    user = User.find(job.user_id)
+    user = User.find(params[:user_id])
+    job = user.jobs.new(job_params)
     if job.save
       UserNotifierMailer.send_job_creation_email(job, user).deliver_now
       render json: JobSerializer.new(job), status: 201
