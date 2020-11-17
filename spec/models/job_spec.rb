@@ -29,14 +29,14 @@ RSpec.describe Job, type: :model do
   end
 
   it "default_date: today if not provided" do
-    fake_date_time = DateTime.now
-    allow(DateTime).to receive(:now) {fake_date_time}
+    fake_date_time = Time.current
+    allow(Time).to receive(:current) {fake_date_time}
     user1 = build(:user)
     job1 = build(:job, completion_date: "", user_id: user1.id)
     expect(job1.completion_date).to be_nil
     job1.save
     expect(job1.completion_date).to be_truthy
-    expect(job1.completion_date).to eq(DateTime.now)
+    expect(job1.completion_date).to eq(Time.current)
   end
 
   it "days_outstanding" do
@@ -163,5 +163,94 @@ RSpec.describe Job, type: :model do
     job2.status_update
     job1 = Job.first
     job2 = Job.last
+
+    expect(job1.status).to eq("NOI Eligible")
+    expect(job2.status).to eq("NOI Filed")
+
+    #testing 2nd notice
+    travel(30.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
+    # We are hitting the right conditional but need to test the notifications
+
+    #testing 3rd notice
+    travel(15.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
+    # We are hitting the right conditional but need to test the notifications
+
+    #testing 4th notice
+    travel(10.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
+    # We are hitting the right conditional but need to test the notifications
+
+    #testing final notice
+    travel(5.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
+
+    #testing expired
+    travel(20.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
+
+    expect(job2.status).to eq("NOI Filed")
+    expect(job1.status).to eq("Inactive")
+  end
+  it "status_update for job_type 'Labor'" do
+    user = create(:user)
+    job1 = create(:job, job_type: "Labor", completion_date: 29.days.ago, user_id: user.id)
+    job2 = create(:job, job_type: "Labor", completion_date: 29.days.ago, status: 3, user_id: user.id)
+    job1.status_update
+    job2.status_update
+
+    expect(job1.status).to eq("Good Standing")
+    expect(job2.status).to eq("NOI Filed")
+
+    travel(1.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
+
+    expect(job1.status).to eq("NOI Eligible")
+    expect(job2.status).to eq("NOI Filed")
+
+    #testing 2nd notice
+    travel(15.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
+    # We are hitting the right conditional but need to test the notifications
+
+    #testing final notice
+    travel(2.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
+    # We are hitting the right conditional but need to test the notifications
+
+    #testing expired?
+    travel(3.day)
+    job1.status_update
+    job2.status_update
+    job1 = Job.first
+    job2 = Job.last
+    # We are hitting the right conditional but need to test the notifications
+    expect(job1.status).to eq("Inactive")
+    expect(job2.status).to eq("NOI Filed")
   end
 end

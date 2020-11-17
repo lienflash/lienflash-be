@@ -8,9 +8,9 @@
 user1 =  User.create(
           name: "Timmy",
           business_name: "Timmy's plumbing",
-          email: "email1234@gmail.com",
+          email: "josh.tukman@gmail.com",
           business_work_number: "555-123-4567",
-          business_cell_number: "555-123-4567",
+          business_cell_number: "+17203192655",
           business_address: "123 Main St.",
           business_city: "Denver",
           business_state: "CO",
