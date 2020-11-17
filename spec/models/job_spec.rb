@@ -19,12 +19,13 @@ RSpec.describe Job, type: :model do
 
   describe 'instance methods' do
     it "default status: 'Good Standing' if none provided" do
-    user1 = build(:user)
-    job1 = build(:job, status: "", user_id: user1.id)
-    expect(job1).to be_a(Job)
-    expect(job1.status).to be_nil
-    job1.save
-    expect(job1.status).to eq("Good Standing")
+      user1 = build(:user)
+      job1 = build(:job, status: "", user_id: user1.id)
+      expect(job1).to be_a(Job)
+      expect(job1.status).to be_nil
+      job1.save
+      expect(job1.status).to eq("Good Standing")
+    end
   end
 
   it "default_date: today if not provided" do
@@ -121,11 +122,19 @@ RSpec.describe Job, type: :model do
 
   it "expired?" do
     user1 = create(:user)
-    job_tm = create(:job, completion_date: 109.days.ago, user_id: user1.id)
-    job_labor = create(:job, job_type: "Labor", completion_date: 49.days.ago, user_id: user1.id)
+    job_tm = create(:job, completion_date: 108.days.ago, user_id: user1.id)
+    job_labor = create(:job, job_type: "Labor", completion_date: 48.days.ago, user_id: user1.id)
     expect(job_tm.expired?).to be false
     expect(job_labor.expired?).to be false
+    JobFacade.new.update_jobs
     travel(1.day)
+    JobFacade.new.update_jobs
+    travel(1.day)
+    JobFacade.new.update_jobs
+    job_tm = Job.first
+    job_labor = Job.last
+    expect(job_tm.status).to eq("Inactive")
+    expect(job_labor.status).to eq("Inactive")
     expect(job_tm.expired?).to be true
     expect(job_labor.expired?).to be true
     travel(1.day)
@@ -243,7 +252,5 @@ RSpec.describe Job, type: :model do
     # We are hitting the right conditional but need to test the notifications
     expect(job1.status).to eq("Inactive")
     expect(job2.status).to eq("NOI Filed")
-
-  end
   end
 end

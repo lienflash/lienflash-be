@@ -1,12 +1,32 @@
 class Api::V1::UsersController < ApplicationController
+  before_action :authorized, only: [:auto_login]
   def create
     user = User.new(user_params)
 
     if user.save
-      render json: UserSerializer.new(user), status: 201
+      token = encode_token({user_id: user.id})
+      render json: UserSerializer.new(user, {params: {token: token}}), status: 201
     else
       render json: {"data":{"errors": user.errors.full_messages}}, status: 400
     end
+  end
+
+  def login
+    if user = User.find_by_email(user_params[:email])
+      if user.authenticate(user_params[:password])
+        token = encode_token({user_id: user.id})
+        #session[:user_id] = user.id
+        render json: UserSerializer.new(user, {params: {token: token}}), status: 200
+      else
+        render json: {"data":{"errors": "Invalid credentials"}}, status: 401
+      end
+    else
+      render json: {"data":{"errors": "Invalid credentials"}}, status: 401
+    end
+  end
+
+  def auto_login
+    render json: @user
   end
 
   def show
