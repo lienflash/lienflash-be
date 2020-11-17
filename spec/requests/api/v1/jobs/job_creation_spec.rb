@@ -71,7 +71,7 @@ describe "API V1 Jobs", type: 'request' do
           post "/api/v1/user/#{@user1.id}/jobs", params: invalid_params
           data = JSON.parse(response.body)
           expect(response.status).to eq(400)
-          expect(data["data"]["errors"][0]).to eq("Job type can't be blank")
+          expect(data["data"]["errors"][0]).to eq("Job site contact name can't be blank")
         end
       end
     end
