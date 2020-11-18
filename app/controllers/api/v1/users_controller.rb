@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authorized, only: [:auto_login]
+  before_action :authorized, only: [:show]
   def create
     user = User.new(user_params)
 
@@ -25,13 +25,14 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  def auto_login
-    render json: @user
-  end
+  # def auto_login
+  #   render json: @user
+  # end
 
   def show
     user = User.find(params[:id])
-    render json: UserSerializer.new(user), status: 200
+    token = encode_token({user_id: user.id})
+    render json: UserSerializer.new(user, {params: {token: token}}), status: 200
   end
 
   private
