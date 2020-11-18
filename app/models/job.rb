@@ -11,6 +11,7 @@ class Job < ApplicationRecord
   validates :completion_date, presence: true
   validates :description_of_work, presence: true
   validates :total_cost, presence: true
+
   enum status: { "Good Standing": 0, "NOI Eligible": 1, "NOI Requested": 2, "NOI Filed": 3, "Lien Filed": 4, "Inactive": 5}
 
   belongs_to :user
@@ -85,7 +86,7 @@ class Job < ApplicationRecord
     job = Job.find(self.id)
     if job.late? && job.status == "Good Standing"
       job.status = 1
-    elsif job.expired? && job.status_of_NOI_eligible?
+    elsif job.expired? && job.status != "NOI Filed"
       job.status = 5
     end
     job.save

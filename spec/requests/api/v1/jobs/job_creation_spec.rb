@@ -3,9 +3,21 @@ require 'rails_helper'
 describe "API V1 Jobs", type: 'request' do
   describe "POST /api/v1/user/jobs" do
     before(:each) do
+      @user1 = User.create!(
+          name: "Timmy",
+          business_name: "Timmy's plumbing",
+          email: "email12345@gmail.com",
+          business_work_number: "555-123-4567",
+          business_cell_number: "555-123-4567",
+          business_address: "123 Main St.",
+          business_city: "Denver",
+          business_state: "CO",
+          business_zip_code: "80218",
+          password: "password1",
+          password_confirmation: "password1"
+        )
       @user1 = create(:user, email: 'josh.tukman@gmail.com', business_cell_number: "+17203192655")
     end
-
     context "with valid parameters" do
       let(:valid_params) do
         {
@@ -24,8 +36,15 @@ describe "API V1 Jobs", type: 'request' do
           user_id: @user1.id
         }
       end
+         let(:valid_params_user) do
+        {
+          email: "email1234@gmail.com",
+          password: "password1"
+        }
+         end
 
-      it "creates a new job" do
+      it "creates a new job" do     
+        allow_any_instance_of(ApplicationController).to receive(:logged_in?).and_return(true)
         post "/api/v1/user/#{@user1.id}/jobs", params: valid_params
         expect(response).to be_successful
         expect(response.status).to eq(201)
@@ -48,9 +67,9 @@ describe "API V1 Jobs", type: 'request' do
         end
 
         it "does not create a new job" do
+          allow_any_instance_of(ApplicationController).to receive(:logged_in?).and_return(true)
           post "/api/v1/user/#{@user1.id}/jobs", params: invalid_params
           data = JSON.parse(response.body)
-
           expect(response.status).to eq(400)
           expect(data["data"]["errors"][0]).to eq("Job site contact name can't be blank")
         end

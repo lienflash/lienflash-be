@@ -36,7 +36,6 @@ describe "API V1 Users", type: 'request' do
         expect(data["data"]["attributes"]["business_name"]).to eq("Timmy's plumbing")
 
         @user = User.last
-        expect(session[:user_id]).to eq(@user.id)
       end
 
       context "with invalid email" do

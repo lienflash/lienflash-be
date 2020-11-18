@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/users/:id', to: 'users#show'
       post '/users', to: 'users#create'
-      post '/login', to: 'login#create'
+      post '/login', to: 'users#login'
 
       resources :user do
         post '/jobs', to: 'jobs#create'

@@ -286,6 +286,7 @@ DEPENDENCIES
   faraday
   fast_jsonapi
   figaro
+  jwt
   launchy
   listen (~> 3.2)
   nyan-cat-formatter
