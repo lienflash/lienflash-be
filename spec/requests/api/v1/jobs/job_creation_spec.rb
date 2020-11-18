@@ -45,7 +45,7 @@ describe "API V1 Jobs", type: 'request' do
 
       it "creates a new job" do     
         allow_any_instance_of(ApplicationController).to receive(:logged_in?).and_return(true)
-        post "/api/v1/user/#{@user1.id}/jobs", params: valid_params
+        post "/api/v1/users/#{@user1.id}/jobs", params: valid_params
         expect(response).to be_successful
         expect(response.status).to eq(201)
       end
@@ -68,7 +68,7 @@ describe "API V1 Jobs", type: 'request' do
 
         it "does not create a new job" do
           allow_any_instance_of(ApplicationController).to receive(:logged_in?).and_return(true)
-          post "/api/v1/user/#{@user1.id}/jobs", params: invalid_params
+          post "/api/v1/users/#{@user1.id}/jobs", params: invalid_params
           data = JSON.parse(response.body)
           expect(response.status).to eq(400)
           expect(data["data"]["errors"][0]).to eq("Job site contact name can't be blank")
