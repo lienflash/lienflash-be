@@ -10,6 +10,10 @@ Rails.application.routes.draw do
         get '/jobs', to: 'jobs#index'
         patch '/jobs/:id', to: 'jobs#update'
       end
+      namespace :admin do
+        get '/users', to: 'users#index'
+      end
+    
     end
   end
 end
