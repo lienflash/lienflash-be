@@ -18,6 +18,20 @@ user1 =  User.create(
           password: "password1",
           password_confirmation: "password1"
         )
+user2 =  User.create(
+          name: "Jason",
+          business_name: "Lienflash",
+          email: "jason@gmail.com",
+          business_work_number: "555-123-4567",
+          business_cell_number: "+17203192655",
+          business_address: "123 Main St.",
+          business_city: "Denver",
+          business_state: "CO",
+          business_zip_code: "80218",
+          password: "password1",
+          password_confirmation: "password1",
+          role: 1
+        )
 job1 = Job.create(
         job_type: "Labor",
         job_site_contact_name: "Tim",
@@ -46,5 +60,6 @@ job2 = Job.create(
         labor_cost: 200.00,
         material_cost: 150.00,
         total_cost: 350.00,
-        user_id: user1.id
+        user_id: user1.id,
+        status: 2
       )

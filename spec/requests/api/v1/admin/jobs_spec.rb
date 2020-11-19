@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "As an admin user" do
-  describe "users index page" do
+  describe "jobs crud functionality" do
     before(:each) do
       @user1 =  User.create(
           name: "Timmy",
@@ -46,30 +46,43 @@ RSpec.describe "As an admin user" do
       allow_any_instance_of(ApplicationController).to receive(:admin?).and_return(true)
       allow_any_instance_of(ApplicationController).to receive(:logged_in?).and_return(true)
     end
-    it "can show a list of all users" do
 
-      get '/api/v1/admin/users'
+    it "can see a list of jobs for a specific user" do
+      create_list(:job, 3, user_id: @user3.id)
+      create(:job, user_id: @user2.id)
+
+      get "/api/v1/admin/users/#{@user3.id}/jobs"
+
       expect(response).to be_successful
+      expect(Job.all.count).to eq(4)
       json = JSON.parse(response.body, symbolize_names: true)
       expect(json[:data].count).to eq(3)
-      expect(json[:data].first[:attributes][:name]).to eq("Timmy")
-      expect(json[:data][1][:attributes][:name]).to eq("Joshy")
     end
 
-    it "can show a single user's info" do
-      get "/api/v1/admin/users/#{@user3.id}"
+    it "admin user can see specific job for a user" do
+      create_list(:job, 3, user_id: @user3.id)
+      job = Job.first
+      get "/api/v1/admin/users/#{@user3.id}/jobs/#{job.id}"
       
+      expect(Job.all.count).to eq(3)
       expect(response).to be_successful
       json = JSON.parse(response.body, symbolize_names: true)
-      expect(json[:data][:attributes][:name]).to eq("Nick")
-    end
-
-    it "can delete a single user" do
-      expect(User.all.count).to eq(3)
-      delete "/api/v1/admin/users/#{@user3.id}"
       
-      expect(response.status).to eq(204)
-      expect(User.all.count).to eq(2)
+      expect(json[:data][:id]).to eq(job.id.to_s)
+    end
+    
+    it "admin user can update status of job" do
+      create_list(:job, 3, user_id: @user3.id)
+      create(:job, user_id: @user3.id, status: 2)
+      job = Job.last
+      expect(job.status).to eq("NOI Requested")
+      patch "/api/v1/admin/users/#{@user3.id}/jobs/#{job.id}"
+      job = Job.last
+      expect(job.status).to eq("NOI Filed")
+      patch "/api/v1/admin/users/#{@user3.id}/jobs/#{job.id}"
+      job = Job.last
+      
+      expect(job.status).to eq("Lien Filed") 
     end
   end
 end
