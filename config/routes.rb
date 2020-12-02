@@ -18,8 +18,8 @@ Rails.application.routes.draw do
         get '/users/:id/jobs', to: 'user_jobs#index'
         get '/users/:user_id/jobs/:job_id', to: 'user_jobs#show'
         patch '/users/:user_id/jobs/:job_id', to: 'user_jobs#update'
+        get '/jobs', to: 'jobs#index'
       end
-    
     end
   end
 end
