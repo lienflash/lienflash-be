@@ -63,14 +63,14 @@ RSpec.describe "As an admin user" do
       create_list(:job, 3, user_id: @user3.id)
       job = Job.first
       get "/api/v1/admin/users/#{@user3.id}/jobs/#{job.id}"
-      
+
       expect(Job.all.count).to eq(3)
       expect(response).to be_successful
       json = JSON.parse(response.body, symbolize_names: true)
-      
+
       expect(json[:data][:id]).to eq(job.id.to_s)
     end
-    
+
     it "admin user can update status of job" do
       create_list(:job, 3, user_id: @user3.id)
       create(:job, user_id: @user3.id, status: 2)
@@ -81,8 +81,20 @@ RSpec.describe "As an admin user" do
       expect(job.status).to eq("NOI Filed")
       patch "/api/v1/admin/users/#{@user3.id}/jobs/#{job.id}"
       job = Job.last
-      
-      expect(job.status).to eq("Lien Filed") 
+
+      expect(job.status).to eq("Lien Filed")
+    end
+
+    it "can see a list of all jobs in the system" do
+      create_list(:job, 3, user_id: @user3.id)
+      create(:job, user_id: @user2.id)
+
+      get "/api/v1/admin/jobs"
+
+      expect(response).to be_successful
+      expect(Job.all.count).to eq(4)
+      json = JSON.parse(response.body, symbolize_names: true)
+      expect(json[:data].count).to eq(4)
     end
   end
 end

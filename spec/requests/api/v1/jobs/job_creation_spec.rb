@@ -36,14 +36,8 @@ describe "API V1 Jobs", type: 'request' do
           user_id: @user1.id
         }
       end
-         let(:valid_params_user) do
-        {
-          email: "email1234@gmail.com",
-          password: "password1"
-        }
-         end
 
-      it "creates a new job" do     
+      it "creates a new job" do
         allow_any_instance_of(ApplicationController).to receive(:logged_in?).and_return(true)
         post "/api/v1/users/#{@user1.id}/jobs", params: valid_params
         expect(response).to be_successful
